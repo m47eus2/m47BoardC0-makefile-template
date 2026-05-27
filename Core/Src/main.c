@@ -70,6 +70,13 @@ int __io_putchar(int ch){
   return 0;
 }
 
+uint8_t userButtonPressed(){
+  if(HAL_GPIO_ReadPin(userButton_GPIO_Port, userButton_Pin) == GPIO_PIN_RESET)
+    return 1;
+  else
+    return 0;
+}
+
 /* USER CODE END 0 */
 
 /**
@@ -111,7 +118,12 @@ int main(void)
   while (1)
   {
     HAL_GPIO_TogglePin(userLed_GPIO_Port, userLed_Pin);
-    printf("Hello World!\n");
+
+    if(userButtonPressed())
+      printf("Button Pressed!\n");
+    else
+      printf("Hello World!\n");
+
     HAL_Delay(500);
     /* USER CODE END WHILE */
 
